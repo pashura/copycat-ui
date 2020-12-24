@@ -1,16 +1,24 @@
-import React from 'react'
+import React from 'react';
+import {connect} from 'react-redux';
+import {runValidation} from '../actions/actions';
+import {Button} from "react-bootstrap";
 
-const RunButton = () => {
-
-    return (
-        <div className="RunButton">
-            RunButton
-        </div>
-    )
+let RunButton = ({data, runValidation, orgId, designName}) => {
+    if (designName){
+        return <Button variant="dark" onClick={() => runValidation(orgId, designName, data)}>Run Validation</Button>
+    }
+    return <Button variant="dark" disabled>Run Validation</Button>
 }
+const mapDispatchToProps = {
+    runValidation: runValidation,
+};
 
-RunButton.propTypes = {
+const mapStateToProps = (state) => ({
+    designsInfo: state.designsInfo,
+    designName: state.designName,
+    orgId: state.orgId
+})
 
-}
+RunButton = connect(mapStateToProps, mapDispatchToProps)(RunButton);
 
 export default RunButton;
