@@ -1,34 +1,75 @@
-import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
-import DragNDrop from "../components/DragNDrop";
-import DesignSearch from "../components/DesignSearch";
+import React, {useState, Fragment, useEffect} from 'react'
+import {withRouter} from 'react-router-dom'
 import RunButton from "../components/RunButton";
-import TestDataArea from "../components/TestDataArea";
 import ErrorsArea from "../components/ErrorsArea";
+import TestDataArea from "../components/TestDataArea";
+import {Col, Container, Row} from "react-bootstrap";
+import DragNDrop from "../components/DragNDrop";
+import CompanySearch from "../components/CompanySearch";
+import DesignDropdown from "../components/DesignDropdown";
+import AuthorizationModal from "../components/Authorization";
+import {applyToken} from "../actions/actions";
+import {connect} from "react-redux";
+import Cookies from 'universal-cookie/es6';
 
+const App = ({token, applyToken}) => {
 
-class App extends Component {
+    const [fileLoaded, setFileLoaded] = useState(false);
+    const [fileObject, setFileObject] = useState("");
 
-    render() {
-        return (
-            <div className="container">
-                <div className="row">
-                    <div className="col">
-                        <DragNDrop />
-                        <TestDataArea />
-                    </div>
-                    <div className="col-2">
-                        <DesignSearch />
-                        <RunButton />
-                    </div>
-                    <div className="col">
-                        <ErrorsArea />
-                    </div>
-                </div>
-            </div>
-        )
+    const cookies = new Cookies();
+
+    if (!token) {
+        token = cookies.get('copycat_token')
     }
+
+    useEffect(() => {
+        applyToken(token)
+    }, [applyToken, token]);
+
+    const uploadFiles = (data) => {
+        setFileObject(data)
+
+        setFileLoaded(true)
+    }
+
+
+    return (
+        <div className="pt-5">
+            <Container fluid>
+                {
+                    !token ? <AuthorizationModal/> : <Fragment>
+                        <Row>
+                            <Col xs={2}>
+                                <CompanySearch/>
+                            </Col>
+                            <Col xs={4}>
+                                <DesignDropdown/>
+                            </Col>
+                            <Col>
+                                <RunButton data={fileObject}/>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                {fileLoaded ? <TestDataArea fileObject={fileObject} setFO={setFileObject}/> :
+                                    <DragNDrop uploadFiles={uploadFiles}/>}
+                            </Col>
+                            <Col> <ErrorsArea/></Col>
+                        </Row>
+                    </Fragment>
+                }
+
+            </Container>
+        </div>
+    )
+
 }
+const mapStateToProps = ({token}) => ({token})
+
+const mapDispatchToProps = {
+    applyToken: applyToken,
+};
 
 
-export default withRouter(App);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
