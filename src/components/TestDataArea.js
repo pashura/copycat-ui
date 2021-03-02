@@ -12,6 +12,11 @@ const styles = {
         boxSizing: 'border-box',
         fontFamily: '"Dank Mono", "Fira Code", monospace',
         ...theme.plain
+    },
+    div: {
+        maxHeight: '80vh',
+        height: 'auto',
+        overflow: 'auto',
     }
 }
 
@@ -43,13 +48,15 @@ const TestDataArea = ({fileObject, setFO}) => {
             <Card>
                 <Card.Header as="h5">Test Data</Card.Header>
                 <Card.Body>
-                    <Editor
-                        value={code}
-                        onValueChange={onValueChange}
-                        highlight={highlight}
-                        padding={10}
-                        style={styles.root}
-                    />
+                    <div style={styles.div}>
+                        <Editor
+                            value={code}
+                            onValueChange={onValueChange}
+                            highlight={highlight}
+                            padding={10}
+                            style={styles.root}
+                        />
+                    </div>
                 </Card.Body>
 
             </Card>
