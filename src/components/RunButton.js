@@ -4,7 +4,7 @@ import {runValidation} from '../actions/actions';
 import {Button} from "react-bootstrap";
 
 let RunButton = ({data, runValidation, orgId, designName}) => {
-    if (designName){
+    if (designName && data){
         return <Button variant="dark" onClick={() => runValidation(orgId, designName, data)}>Run Validation</Button>
     }
     return <Button variant="dark" disabled>Run Validation</Button>

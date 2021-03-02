@@ -1,7 +1,7 @@
 export const ENV = 'local'; // TODO: Figure out with environments
 
 const CC_URLS = {
-    local: 'https://copycat-api.herokuapp.com/',
+    local: 'http://127.0.0.1:5000/',
     test: 'https://copycat-api.herokuapp.com/',
     prod: '',
 };
