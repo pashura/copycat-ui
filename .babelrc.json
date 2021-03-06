@@ -1,0 +1,32 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env"
+    ],
+    [
+      "@babel/preset-react"
+    ]
+  ],
+  "plugins": [
+    ["@babel/plugin-transform-react-jsx"],
+    [
+      "@babel/plugin-syntax-jsx"
+    ],
+    [
+      "prismjs",
+      {
+        "languages": [
+          "javascript",
+          "css",
+          "html"
+        ],
+        "plugins": [
+          "line-numbers",
+          "show-language"
+        ],
+        "theme": "okaidia",
+        "css": true
+      }
+    ]
+  ]
+}
