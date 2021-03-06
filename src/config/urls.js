@@ -7,13 +7,13 @@ const CC_URLS = {
 };
 
 const TD_URLS = {
-    local: 'https://design-ui-api.test.spsapps.net',
+    local: 'https://design-ui-api.spsapps.net',
     test: 'https://design-ui-api.test.spsapps.net',
     prod: 'https://design-ui-api.spsapps.net',
 };
 
 const ID_URLS = {
-    local: 'https://test.id.spsc.io/',
+    local: 'https://id.spsc.io/',
     test: 'https://test.id.spsc.io/',
     prod: 'https://id.spsc.io/',
 };
