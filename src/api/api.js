@@ -43,6 +43,36 @@ export function fetchSearchCompanySaga(searchCompanyTerm, token) {
     return axios.get(`${IDENTITY_URL}identity/v2/organizations/?name=${encodeURIComponent(searchCompanyTerm)}&page_size=100`, config);
 }
 
+export function checkToken(token) {
+    const config = {
+        headers: {
+            Authorization: `bearer ${token}`,
+        }
+    }
+
+    return axios.post(`${IDENTITY_URL}identity/token/check/?access_token=${token}`, config)
+        .then(response => {
+            return new Promise((resolve, reject) => {
+                if (response.status === 404) {
+                    reject(new Error("Not Found"));
+                }
+                if (response.status === 200) {
+                    resolve(response);
+                }
+            });
+        });
+}
+
+export function getUserInfo(token) {
+    const config = {
+        headers: {
+            Authorization: `bearer ${token}`,
+        }
+    }
+
+    return axios.get(`${IDENTITY_URL}identity/users/me/?access_token=${token}`, config);
+}
+
 export async function fetchGetDesigns(orgId, token) {
     const config = {
         headers: {
@@ -64,4 +94,13 @@ export function postValidate({orgId, designName, data}) {
         }
     }
     return axios.post(`${CC_LOCALHOST}validate/org_id/${orgId}/design/${designName}`, data, config);
+}
+
+export function postValidateReport({orgId, designName, data}) {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+        }
+    }
+    return axios.post(`${CC_LOCALHOST}validate/org_id/${orgId}/design/${designName}/report`, data, config);
 }

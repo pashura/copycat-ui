@@ -1,24 +1,21 @@
 import React, {useState, Fragment} from 'react'
-import RunButton from "../components/RunButton";
-import ErrorsArea from "../components/ErrorsArea";
-import TestDataArea from "../components/TestDataArea";
 import {Col, Container, Row} from "react-bootstrap";
-import DragNDrop from "../components/DragNDrop";
 import CompanySearch from "../components/CompanySearch";
 import DesignDropdown from "../components/DesignDropdown";
+import ReportTable from "../components/ReportTable";
+import RunReportButton from "../components/RunReportButton";
+import FileChooser from "../components/FileChooser";
 
-const App = () => {
+const Report = () => {
 
     const [fileLoaded, setFileLoaded] = useState(false);
     const [fileObject, setFileObject] = useState("");
 
-
-    const uploadFiles = (data) => {
+    const uploadFiles = data => {
         setFileObject(data)
 
         setFileLoaded(true)
     }
-
 
     return (
         <div className="pt-5">
@@ -33,15 +30,14 @@ const App = () => {
                                 <DesignDropdown/>
                             </Col>
                             <Col>
-                                <RunButton data={fileObject}/>
+                                <FileChooser uploadFiles={uploadFiles}/>
+                            </Col>
+                            <Col>
+                                <RunReportButton data={fileObject}/>
                             </Col>
                         </Row>
                         <Row>
-                            <Col>
-                                {fileLoaded ? <TestDataArea fileObject={fileObject} setFO={setFileObject}/> :
-                                    <DragNDrop uploadFiles={uploadFiles}/>}
-                            </Col>
-                            <Col> <ErrorsArea/></Col>
+                            {fileObject ? <ReportTable/> : null}
                         </Row>
                     </Fragment>
                 }
@@ -52,5 +48,4 @@ const App = () => {
 
 }
 
-
-export default App;
+export default Report;

@@ -23,6 +23,11 @@ const reducer = (state = {}, action) => {
         case ActionTypes.RUN_VALIDATION_SUCCESS:
             return {...state, loadingValidation: false, errors: action.errors};
 
+        case ActionTypes.RUN_VALIDATION_REPORT:
+            return {...state, loadingValidationReport: true};
+        case ActionTypes.RUN_VALIDATION_REPORT_SUCCESS:
+            return {...state, loadingValidationReport: false, report: action.report};
+
         case ActionTypes.SET_ORG_ID:
             return {...state, orgId: action.orgId};
 
@@ -35,6 +40,18 @@ const reducer = (state = {}, action) => {
             return {...state};
         case ActionTypes.APPLY_TOKEN_SUCCESS:
             return {...state, token: action.token};
+
+        case ActionTypes.CHECK_TOKEN:
+            return {...state};
+        case ActionTypes.CHECK_TOKEN_SUCCESS:
+            return {...state, tokenStatus: action.tokenStatus};
+        case ActionTypes.CHECK_TOKEN_FAILED:
+            return {...state, tokenStatus: action.tokenStatus};
+
+        case ActionTypes.GET_USER_INFO:
+            return {...state};
+        case ActionTypes.GET_USER_INFO_SUCCESS:
+            return {...state, userInfo: action.userInfo};
 
         default:
             return state;
